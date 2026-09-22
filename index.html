@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transferencia de Fotos</title>
+<meta name="description" content="Pasa fotos y videos del teléfono al PC por Wi-Fi escaneando un código QR. Sin cables, sin apps, sin nube. Compatible con iPhone y Android.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#f6f7fb; --card:#fff; --ink:#141b2b; --muted:#5b6577; --line:#e7eaf2;
+    --brand:#3b82f6; --brand2:#5c7cfa; --green:#34c759; --shadow:0 10px 30px rgba(20,27,43,.08); }
+  @media (prefers-color-scheme: dark){ :root{ --bg:#0f1420; --card:#141b2b; --ink:#e6e9f2;
+    --muted:#93a1c0; --line:#232f47; --shadow:0 10px 30px rgba(0,0,0,.35); } }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+  a{color:var(--brand);text-decoration:none}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:14px;font-weight:700;
+    font-size:1.02rem;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 8px 22px rgba(59,130,246,.35)}
+  .btn-ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow)}
+
+  header.hero{padding:66px 0 52px;text-align:center}
+  .badge{display:inline-block;background:rgba(59,130,246,.12);color:var(--brand);font-weight:600;font-size:.85rem;
+    padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  .hero h1{font-size:clamp(2.2rem,5.2vw,3.6rem);font-weight:800;margin:.1em 0 .15em;letter-spacing:-.5px}
+  .hero .lead{font-size:clamp(1.15rem,2.4vw,1.55rem);color:var(--muted);max-width:660px;margin:0 auto 12px;font-weight:500}
+  .hero p.sub{color:var(--muted);max-width:580px;margin:0 auto 30px}
+  .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .qrdemo{margin-top:46px;display:inline-flex;flex-direction:column;align-items:center;gap:10px;
+    background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+  .qrbox{width:150px;height:150px;border-radius:12px;border:6px solid var(--ink);
+    background:repeating-conic-gradient(var(--ink) 0% 25%, transparent 0% 50%) 0 0/28px 28px, var(--card)}
+  .qrdemo span{font-size:.85rem;color:var(--muted)}
+
+  section{padding:54px 0}
+  .alt{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  h2{font-size:clamp(1.55rem,3.3vw,2.2rem);font-weight:800;text-align:center;margin:0 0 8px;letter-spacing:-.3px}
+  .section-sub{text-align:center;color:var(--muted);max-width:660px;margin:0 auto 40px}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.g3,.g2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:var(--shadow)}
+  .card .ic{font-size:1.9rem;display:block;margin-bottom:10px}
+  .card h3{margin:.1em 0 .35em;font-size:1.12rem}
+  .card p{margin:0;color:var(--muted);font-size:.96rem}
+  .card ul{margin:.4em 0 0;padding-left:1.1em;color:var(--muted);font-size:.94rem}
+  .card ul li{margin:.25em 0}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:720px){.steps{grid-template-columns:1fr}}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:var(--shadow);text-align:center}
+  .step .n{width:46px;height:46px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:#fff;font-size:1.15rem;background:linear-gradient(135deg,var(--brand),var(--brand2))}
+
+  .tech{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px}
+  .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-weight:600;
+    font-size:.92rem;box-shadow:var(--shadow)} .chip small{color:var(--muted);font-weight:400}
+
+  .safe{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--green);border-radius:14px;
+    padding:22px 24px;box-shadow:var(--shadow);max-width:760px;margin:0 auto} .safe b{color:var(--green)}
+
+  .closing{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:26px;padding:50px 28px;
+    text-align:center;box-shadow:0 16px 40px rgba(59,130,246,.3)} .closing h2{color:#fff}
+  .closing p{color:rgba(255,255,255,.92);max-width:580px;margin:0 auto 26px} .closing .btn-primary{background:#fff;color:var(--brand)}
+  footer{padding:46px 0 62px;text-align:center;color:var(--muted);font-size:.92rem} footer .sign{font-weight:700;color:var(--ink)}
+  .note{font-size:.82rem;color:var(--muted);margin-top:8px}
+</style></head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <span class="badge">Teléfono → PC · por Wi-Fi · sin cables</span>
+  <h1>📲 Transferencia de Fotos</h1>
+  <p class="lead">Escanea un QR y pasa tus fotos y videos al PC en segundos.</p>
+  <p class="sub">Sin cables, sin instalar apps en el teléfono y sin nube: las imágenes viajan
+    <b>directo</b> del teléfono a tu computadora por tu propia red Wi-Fi.</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="#descargar">⬇️ Descargar gratis</a>
+    <a class="btn btn-ghost" href="#como">Cómo funciona</a>
+  </div>
+  <div class="qrdemo"><div class="qrbox"></div><span>Escanea · conecta · sube</span></div>
+</div></header>
+
+<section id="como"><div class="wrap">
+  <h2>Cómo funciona</h2>
+  <p class="section-sub">Tres pasos. No hay que escribir direcciones IP, ni contraseñas, ni crear cuentas.</p>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Inicia en tu PC</h3><p style="color:var(--muted)">Abre la app y pulsa «Iniciar servidor». Aparece un código QR único.</p></div>
+    <div class="step"><div class="n">2</div><h3>Escanea el QR</h3><p style="color:var(--muted)">Con la cámara del teléfono. Se abre la página de subida al instante.</p></div>
+    <div class="step"><div class="n">3</div><h3>Sube tus fotos</h3><p style="color:var(--muted)">Eliges fotos y videos y llegan a la carpeta de tu PC. Listo.</p></div>
+  </div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>Sistemas y teléfonos compatibles</h2>
+  <p class="section-sub">En el teléfono no instalas nada: funciona en el navegador que ya tienes.</p>
+  <div class="grid g3">
+    <div class="card"><span class="ic">💻</span><h3>En el PC</h3>
+      <p>Aquí corre el programa (el servidor y el panel).</p>
+      <ul><li><b>Windows 10 y 11</b> (.exe listo para usar)</li><li>También desde el código en Python 3</li></ul></div>
+    <div class="card"><span class="ic">📱</span><h3>iPhone / iPad</h3>
+      <p>Solo el navegador, sin App Store.</p>
+      <ul><li><b>iOS / iPadOS</b> con <b>Safari</b> (o Chrome)</li><li>Escanea el QR con la cámara</li><li>Fotos HEIC y videos incluidos</li></ul></div>
+    <div class="card"><span class="ic">🤖</span><h3>Android</h3>
+      <p>Solo el navegador, sin Play Store.</p>
+      <ul><li><b>Android</b> con <b>Chrome</b> (o el navegador del sistema)</li><li>Escanea el QR con la cámara</li><li>Fotos y videos en calidad original</li></ul></div>
+  </div>
+  <p class="section-sub" style="margin-top:26px;margin-bottom:0">📶 Único requisito: el teléfono y el PC en la <b>misma red Wi-Fi</b>.
+    (La primera vez, Windows puede pedir permitir el <b>Firewall</b> en redes privadas.)</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Por qué gusta</h2>
+  <div class="grid g3">
+    <div class="card"><span class="ic">🔒</span><h3>Privado</h3><p>Todo por tu Wi-Fi local; nada pasa por internet ni por la nube.</p></div>
+    <div class="card"><span class="ic">⚡</span><h3>Rápido y sin fallos</h3><p>Sube muchas fotos a la vez, por lotes, en paralelo y con reintentos automáticos.</p></div>
+    <div class="card"><span class="ic">🎞️</span><h3>Fotos y videos</h3><p>Cualquier formato del teléfono, en su calidad original.</p></div>
+    <div class="card"><span class="ic">🔑</span><h3>Con clave</h3><p>Cada sesión usa un token único: nadie más en la red puede entrar.</p></div>
+    <div class="card"><span class="ic">📁</span><h3>Tú eliges dónde</h3><p>Cambia la carpeta de destino y ábrela con un clic.</p></div>
+    <div class="card"><span class="ic">🆓</span><h3>Gratis y sin cuenta</h3><p>Sin registros, sin apps de tienda, sin límites.</p></div>
+  </div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>Tecnología</h2>
+  <p class="section-sub">Herramientas abiertas y ligeras. El "servidor" es solo tu propia PC en la red local.</p>
+  <div class="tech">
+    <span class="chip">🐍 Python 3</span>
+    <span class="chip">🖥️ PySide6 <small>· panel de escritorio (Qt 6)</small></span>
+    <span class="chip">🌐 Flask + Werkzeug <small>· servidor web local</small></span>
+    <span class="chip">🔲 qrcode <small>· genera el QR</small></span>
+    <span class="chip">🖼️ Pillow</span>
+    <span class="chip">📶 HTTP sobre tu Wi-Fi <small>· sin nube</small></span>
+    <span class="chip">🔑 Token por sesión <small>· seguridad</small></span>
+  </div>
+  <p class="section-sub" style="margin-top:28px;margin-bottom:0">En el teléfono no hay tecnología que instalar: se usa el <b>navegador</b> y su <b>cámara</b> para el QR.</p>
+</div></section>
+
+<section><div class="wrap"><div class="safe">
+  <h3 style="margin-top:0">🔒 Tus fotos son tuyas</h3>
+  <p style="color:var(--muted);margin:0">La transferencia ocurre <b>solo dentro de tu red local</b>. Las imágenes van directo del
+  teléfono a tu PC — <b>no se suben a internet</b> ni a ningún servicio, y el acceso está protegido con una clave única por sesión.</p>
+</div></div></section>
+
+<section id="descargar"><div class="wrap"><div class="closing">
+  <h2>Pásalas sin cables hoy</h2>
+  <p>Descarga la app para Windows, ábrela y escanea el QR con tu teléfono. Así de simple.</p>
+  <div class="cta">
+    <!-- ⬇️ Reemplaza USUARIO/REPO por tu usuario y repositorio de GitHub -->
+    <a class="btn btn-primary" href="https://github.com/USUARIO/REPO/releases">⬇️ Descargar (Releases)</a>
+    <a class="btn btn-ghost" href="https://github.com/USUARIO/REPO">Ver el código en GitHub</a>
+  </div>
+  <p class="note" style="color:rgba(255,255,255,.85)">Gratis · Código abierto · Para Windows</p>
+</div></div></section>
+
+<footer><div class="wrap">
+  <p>Hecho con cariño por <span class="sign">KALEVI LATVA AIJO ALEGRIA</span></p>
+  <p class="note">🇪🇸 Español · 🇬🇧 English · 🇫🇮 Suomi — proyecto disponible en tres idiomas.</p>
+</div></footer>
+</body></html>
